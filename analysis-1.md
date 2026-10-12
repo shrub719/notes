@@ -90,13 +90,68 @@ should be minimised --- equivalently, we could minimise
 $\left|p^2 - 2q^2\right|$.
 
 We've now seen that with $p, q \in \mathbb N$, we cannot get $\left|p^2 - 2q^2\right| = 0$;
-but can we get $\left|p^2 - 2q^2\right| = 1$? Watch closely, because I'm about to pull
+but can we get $\left|p^2 - 2q^2\right| = 1$? 
+
+> This alternate "good enough" formula for the approximation of $\sqrt 2$ using
+number theory is called **Pell's equation**.
+
+Watch closely, because I'm about to pull
 the most bullshit rearrangements in the name of *analysis*.
 
-$$
 \begin{align}
+\left|p^2 - 2q^2\right| &= 1 \\\
 p^2 - 2q^2 &= \pm 1 \\\
-\frac{p^2}{q^2} - 2 &= \pm \frac 1 {q^2}
+\frac{p^2}{q^2} - 2 &= \pm \frac 1 {q^2} \\\
+( \frac p q - \sqrt 2 ) ( \frac p q + \sqrt 2 ) &= \pm \frac 1 {q^2} \\\
+\frac p q - \sqrt 2 &= \pm \frac 1 { q^2 \left( \frac p q + \sqrt 2 \right)} \\\
+\left| \frac p q - \sqrt 2 \right| &= \frac 1 { q^2 \left| \frac p q + \sqrt 2 \right| }
 \end{align}
-$$
 
+Since $\frac 1 { \frac p q + \sqrt 2 } < \frac 1 {\sqrt 2} < 1$,
+$\frac 1 { q^2 \left( \frac p q + \sqrt 2 \right) } < \frac 1 {q^2}$;
+this means the larger we make our $q$, the smaller $\frac 1 {q^2}$ will be, and the
+our error will be bounded to a smaller value.
+Our goal then becomes to find solutions to $\left| p^2 - 2q^2 \right| = 1$ 
+with larger and larger $q$.
+
+We can define a sequence of pairs $(p_n, q_n)$ recursively, starting with
+$(p_1, q_1) = (1, 1)$. We then iterate on them with these formulae:
+
+\begin{align}
+p_{n+1} &= p_n + 2q_n \\\
+q_{n+1} &= p_n + q_n
+\end{align}
+
+**Proposition.** All pairs $(p_n, q_n)$ generated using this definition from $(1, 1)$
+satisfy Pell's equation. In addition, $q_n \geq n$ ($q$ continues increasing as 
+we iterate).
+
+> A proposition is like a less important theorem.
+
+**Proof.** We will prove this by induction. Define
+$\mathcal P (k): |p_k^2 - 2q_k^2| = 1$.
+
+First we show our basis $\mathcal P (1)$: $| 1^2 - 2(1)^2 | = 1$ and indeed $1 \geq 1$,
+so it is true.
+
+Now, to show our inductive step, assume $\exists (p_k, q_k)$ s.t. $\mathcal P (k)$.
+
+\begin{align}
+p_{k+1} &= p_k + 2q_k \\\
+q_{k+1} &= p_k + q_k > 1\\\
+\end{align}
+
+\begin{align}
+&\left|(p_k + 2q_k)^2 - 2(p_k + q_k)^2\right| \\\
+&= \left| p_k^2 + 4p_kq_k + 4q_k^2 - 2p_k^2 - 4p_kq_k - 2q_k^2 \right| \\\
+&= |2q_k^2 - p_k^2| \\\
+&= |p_k^2 - 2q_k^2| \\\
+&= 1
+\end{align}
+
+\begin{align}
+\therefore \mathcal P(k) \implies \mathcal P(k+1)
+\end{align}
+
+We have that $\mathcal P(1)$, and $\mathcal P(k) \implies \mathcal P(k + 1)$;
+as a result, $\mathcal P(n) \\ \forall n \in \mathbb N$. $\square$
